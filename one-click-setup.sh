@@ -38,9 +38,9 @@ function linux_install {
 
             wget https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_linux_amd64.zip
             if [[ $EUID -ne 0 ]]; then
-                sudo unzip ./terraform_0.11.13_linux_amd64.zip -d /usr/local/bin/
+                sudo unzip ./terraform_0.12.6_linux_amd64.zip -d /usr/local/bin/
             else
-                unzip ./terraform_0.11.13_linux_amd64.zip -d /usr/local/bin/
+                unzip ./terraform_0.12.6_linux_amd64.zip -d /usr/local/bin/
             fi
         fi
     done
@@ -51,7 +51,8 @@ function terraform_install {
 
     case $OS in
         Darwin)
-            brew install terraform
+            curl -O https://releases.hashicorp.com/terraform/0.12.6/terraform_0.12.6_darwin_amd64.zip
+            unzip ./terraform_0.12.6_darwin_amd64.zip -d /usr/local/bin/
             ;;
         Linux)
             linux_install
