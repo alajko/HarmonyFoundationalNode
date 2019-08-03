@@ -13,6 +13,8 @@ function setup_aws_keys
     echo "Enter your AWS SECRET ACCESS KEY"
     read AWS_SECRET_ACCESS_KEY
     #storing it to aws configure to make it easy to destroy 
+    mkdir -p ~/.aws/
+    touch ~/.aws/credentials
     echo "" >> ~/.aws/credentials
     echo "[profile harmony-foundational]" >> ~/.aws/credentials
     echo "aws_access_key_id = "$AWS_ACCESS_KEY" " >> ~/.aws/credentials
@@ -74,6 +76,7 @@ function provision_terraform
     INSTANCE_IP=$(head -n 1 local_config.txt)
     echo "Your IP is: "$INSTANCE_IP
     terraform output private_key >> local_config.txt
+    echo $region >> local_config.txt
 }
 
 function instance_login
@@ -102,8 +105,9 @@ function launch
 }
 
 function destroy
-{
-    terraform destroy -auto-approve
+{   
+    region=$(cat local_config.txt | head -3 | tail -1 )
+    terraform destroy -auto-approve -var=$region
 }
 
 ACTION=$1
