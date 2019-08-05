@@ -85,7 +85,12 @@ function get_stuff {
     get_one_click_folder
     terraform_install
     setup_terraform
+    setup_key_folder
 } 
+
+function setup_key_folder {
+    mkdir -p 'key-folder/'
+}
 
 ACTION=$1
 

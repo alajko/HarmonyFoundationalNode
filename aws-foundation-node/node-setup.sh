@@ -24,8 +24,8 @@ function setup_aws_keys
 function input_user_access_keys
 {
     #Need check-if-exists logic, so that you don't ask again.
-    echo "Enter the geography where you want to run the instance: us-west-1, us-east-1 etc:"
-    read REGION
+    #echo "Enter the geography where you want to run the instance: us-west-1, us-east-1 etc:"
+    #read REGION
     echo "Have you entered your aws access key already [y/n]?"
     read AWSYES
     case $AWSYES in 
@@ -69,7 +69,8 @@ function provision_terraform
 {   
     echo "Setting up your AWS INSTANCE ..."
     region='aws_region='$REGION
-    terraform apply -var=$region -auto-approve
+    #terraform apply -var=$region -auto-approve
+    terraform apply -auto-approve
     rm -f local_config.txt
     terraform output ip
     terraform output ip | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" >> local_config.txt
