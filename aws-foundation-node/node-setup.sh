@@ -26,14 +26,22 @@ function input_user_access_keys
     #Need check-if-exists logic, so that you don't ask again.
     #echo "Enter the geography where you want to run the instance: us-west-1, us-east-1 etc:"
     #read REGION
-    echo "Have you entered your aws access key already [y/n]?"
-    read AWSYES
-    case $AWSYES in 
-        yY][eE][sS]|[yY])
-        echo "We will use credentials file from ~/.aws/credentials" ;;
-        nN][oO]|[nN])
-        setup_aws_keys ;;
-    esac
+    filename=~/.aws/credentials
+    if [ -f "$filename" ]; then
+        echo "The AWS credentials file $filename exists"
+        if grep -q "harmony-foundational" $filename; then
+           echo "Your AWS Credentials are already set:"
+           grep -A 3 harmony-foundational $filename
+        else
+            echo "Credentials File exists but does not have required profile"
+            echo "Will now setup your credentials file"
+            setup_aws_keys
+        fi 
+    else 
+        echo "$filename does not exist"
+        echo "Will now setup your credentials file"
+        setup_aws_keys
+    fi
 }
 
 function generate_new_keys
@@ -68,7 +76,7 @@ function setup_login_keys
 function provision_terraform
 {   
     echo "Setting up your AWS INSTANCE ..."
-    region='aws_region='$REGION
+    #region='aws_region='$REGION
     #terraform apply -var=$region -auto-approve
     terraform apply -auto-approve
     rm -f local_config.txt
@@ -88,8 +96,8 @@ function instance_login
     target="ec2-user@"$INSTANCE_IP
     echo "Running a Node on Remote Server.."
     sleep 2
-    ssh -t -i  $KEYS $target 'tmux new  -d -s nodeRun "~/node.sh -S -t -p empty.txt"'
-    ssh -i $KEYS $target
+    ssh -t -i $KEYS -o "StrictHostKeyChecking no" $target 'tmux new  -d -s nodeRun "~/node.sh -S -t -p empty.txt"'
+    ssh -i $KEYS -o "StrictHostKeyChecking no" $target
 }
 
 function create

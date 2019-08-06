@@ -1,7 +1,7 @@
 // EC2 instance configurations
 variable "node_instance_type" {
   description = "Instance type of the node instance"
-  default     = "m5a.large"
+  default     = "t3.small"
 }
 
 variable "public_key_path" {
