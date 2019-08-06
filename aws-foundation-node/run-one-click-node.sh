@@ -48,9 +48,9 @@ function generate_new_keys
 {
     echo "New keys would be generated in keys/harmony-foundation"
     echo "If they exist, you have option to use them again"
-    mkdir -p "keys/"
-    ssh-keygen -N '' -f keys/harmony-foundation
-    KEYS="keys/harmony-foundation"
+    mkdir -p "ssh-keys/"
+    ssh-keygen -N '' -f ssh-keys/harmony-foundation
+    KEYS="ssh-keys/harmony-foundation"
 }
         
 function use_default_keys 

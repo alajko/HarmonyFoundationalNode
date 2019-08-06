@@ -82,7 +82,7 @@ function setup_terraform {
     terraform init
 }
 function get_stuff {
-    get_one_click_folder
+    #get_one_click_folder
     terraform_install
     setup_terraform
     setup_key_folder

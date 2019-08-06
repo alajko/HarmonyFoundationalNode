@@ -27,7 +27,7 @@ data "aws_ami" "fn-node" {
 }
 
 resource "aws_key_pair" "auth" {
-  key_name   = "harmony-node"
+  key_name   = "harmony-foundation"
   public_key = "${file(var.public_key_path)}"
 }
 
@@ -35,10 +35,10 @@ resource "aws_instance" "foundation-node" {
   ami           =  "${data.aws_ami.fn-node.id}"
   instance_type = "${var.node_instance_type}"
   vpc_security_group_ids = ["${aws_security_group.foundational-sg.id}"]
-  key_name = "harmony-node"
+  key_name = "harmony-foundation"
   
   provisioner "file" {
-    source = "setup.sh"
+    source = "instance-setup.sh"
     destination = "/home/ec2-user/setup.sh"
     connection {
       host = self.public_ip
