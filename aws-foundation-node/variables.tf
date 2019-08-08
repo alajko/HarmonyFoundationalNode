@@ -6,7 +6,7 @@ variable "node_instance_type" {
 
 variable "public_key_path" {
   description = "Enter the path to the SSH Public Key to add to AWS."
-  default = "keys/harmony-foundation.pub"
+  default = "ssh-keys/harmony-foundation.pub"
 }
 
 variable "private_key_path" {
