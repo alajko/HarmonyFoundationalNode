@@ -11,7 +11,7 @@ variable "public_key_path" {
 
 variable "private_key_path" {
   description = "Enter the path to the SSH Private Key to add to AWS."
-  default = "keys/harmony-foundation"
+  default = "ssh-keys/harmony-foundation"
 }
 
 variable "node_volume_size" {
